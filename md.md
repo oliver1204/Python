@@ -21,12 +21,18 @@
   - [2. 容器类型与对应操作⾏为](#2-容器类型与对应操作为)
     - [2.1 列表](#21-列表)
       - [输出结果](#输出结果-7)
-    - [2.2 元组类型](#22-元组类型)
+      - [列表切片](#列表切片)
       - [输出结果](#输出结果-8)
-    - [2.3 字典类型](#23-字典类型)
+      - [列表.sort() 与 sorted() 区别](#列表sort-与-sorted-区别)
       - [输出结果](#输出结果-9)
-    - [2.4 集合](#24-集合)
+    - [2.2 元组类型](#22-元组类型)
+      - [元组的功能 -- tuple类型不允许修改](#元组的功能----tuple类型不允许修改)
       - [输出结果](#输出结果-10)
+    - [2.3 字典类型](#23-字典类型)
+      - [输出结果](#输出结果-11)
+      - [输出结果](#输出结果-12)
+    - [2.4 集合](#24-集合)
+      - [输出结果](#输出结果-13)
   - [3. 分⽀结构](#3-分结构)
     - [3.1 单分⽀](#31-单分)
     - [3.2 双分⽀](#32-双分)
@@ -441,26 +447,127 @@ alist = [], type(alist) = <class 'list'>
 ===修改 [666]
 ```
 
-### 2.2 元组类型
+#### 列表切片
 ```python
+# [start : stop : step] 下标 : start=0, stop=10 (不包含) step = 1
+alist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# blist = alist[0:5:1]
+blist = alist[:5:]
+print(blist)
+str = 'hello world'
+substr = str[0:5:1]
+print(substr)
+```
 
+#### 输出结果
+
+```python
+[1, 2, 3, 4, 5]
+hello
+```
+
+#### 列表.sort() 与 sorted() 区别
+
+```python
+# 存取有序
+alist = list([5, 7, 3, 2, 8, 9, 1, 4, 6])
+print(alist)
+# 元素有序 (升序)
+alist.sort()
+print('=== sort', alist)
+alist.reverse() # 降序
+print('=== reverse',alist)
+print('-' * 20)
+blist = list([5, 7, 3, 2, 8, 9, 1, 4, 6])
+blist.sort(reverse=True)
+print('===blist.sort(reverse=True) ',blist)
+print('-' * 20)
+# 内置函数 sorted() 不是在原列表上进行排序的, 而是复制了一个新排列再实现排序. 所以操作完毕后一定要接收返回的结果
+clist = list([5, 7, 3, 2, 8, 9, 1, 4, 6])
+dlist = sorted(clist, reverse=True)
+print(clist, id(clist))
+print('====sorted(clist, reverse=True)', dlist, id(dlist))
+```
+
+#### 输出结果
+
+```python
+=== sort [1, 2, 3, 4, 5, 6, 7, 8, 9]
+=== reverse [9, 8, 7, 6, 5, 4, 3, 2, 1]
+--------------------
+===blist.sort(reverse=True)  [9, 8, 7, 6, 5, 4, 3, 2, 1]
+--------------------
+[5, 7, 3, 2, 8, 9, 1, 4, 6] 4346788288
+====sorted(clist, reverse=True) [9, 8, 7, 6, 5, 4, 3, 2, 1] 4346788928
+```
+dlist 和 clist 地址是不一样的，所以内置的sort 方法是复制了一个全新的数组。
+
+而数组本身的sort方法，[].sort 是对数组本身操作的，id 是同一个。
+
+
+### 2.2 元组类型
+
+#### 元组的功能 -- tuple类型不允许修改
+1. 可以更安全地保 护数据
+   程序设计中有些数据可能永远不会改变, 将它存储在元组(tuple)内, 可以安全地保护, 例如: 图像处理时对象的长,宽或每一像素的色彩数据, 很多是元组数据类型.
+2. 加快程序执行速度元组 (tuple) 结构比列表 (list) 简单, 占用较少的系统资源, 程序执行时速度比较快.了解了上述元组的优点后, 未来设计程序时, 如果确定数据可以不更改, 就尽量使用元组数据类型
+```python
+# 定义一个元组类型
+# tuple 元素不可变
+tuple1 = (1, 2, 3, 4, 5)
+print(tuple1, type(tuple1))
+# tuple1[0] = 6
+# print(tuple1, type(tuple1))
+# 细节 (元组中仅有单个元素, 需要在元素之后添加逗号, 不能省略)
+tuple2 = (1 )
+print(tuple2, type(tuple2))
 ```
 #### 输出结果
 
 ```python
-
+(1, 2, 3, 4, 5) <class 'tuple'>
+1 <class 'int'>
+(1,) <class 'tuple'>
 ```
+!!! 细节 (元组中仅有单个元素, 需要在元素之后添加逗号, 不能省略)
 
 ### 2.3 字典类型
+python 中也有内置的map函数，但是它不同于java 或 js的含义，
 ```python
-
+nums_str = ["1", "2", "3", "4"]
+nums_int = list(map(int, nums_str))
+print(nums_int)
 ```
 #### 输出结果
 
 ```python
-
+[1, 2, 3, 4]
 ```
 
+```python
+#字典类型 : key-value 键值对, 通过 key 实现操作, key 要保证唯一性
+# Python : dict() {key: value}
+
+adict = {'张三': 100,'李四': 98,'王五': 88,'赵六': 60}
+print(adict)
+adict['张三'] = 90
+print(adict)
+score = adict['张三']
+print(f'{score = }')
+# keys 键集, values 值集, items 键值对集合
+print(adict.keys())
+print(adict.values())
+```
+#### 输出结果
+
+```python
+adict = {'张三': 100,'李四': 98,'王五': 88,'赵六': 60}
+{'张三': 90,'李四': 98,'王五': 88,'赵六': 60}
+score = 90
+dict_keys(['张三', '李四', '王五', '赵六'])
+dict_values([90, 98, 88, 60])
+```
+大型程序设计中, 字典用久了会产生相当多的元素, 也许是几千个或几十万个或更多.
 ### 2.4 集合
 ```python
 
