@@ -48,43 +48,50 @@
       - [输出结果](#输出结果-18)
       - [输出结果](#输出结果-19)
     - [4.2 while循环](#42-while循环)
+      - [认识哨兵值](#认识哨兵值)
       - [输出结果](#输出结果-20)
-  - [5. 函数定义](#5-函数定义)
+      - [哨兵值](#哨兵值)
       - [输出结果](#输出结果-21)
-  - [6. ⾯向对象](#6-向对象)
+  - [5. 函数定义](#5-函数定义)
       - [输出结果](#输出结果-22)
-  - [7. ⽂件操作](#7-件操作)
       - [输出结果](#输出结果-23)
+      - [输出结果](#输出结果-24)
+      - [输出结果](#输出结果-25)
+      - [输出结果](#输出结果-26)
+  - [6. ⾯向对象](#6-向对象)
+      - [输出结果](#输出结果-27)
+  - [7. ⽂件操作](#7-件操作)
+      - [输出结果](#输出结果-28)
   - [8. 异常处理](#8-异常处理)
     - [8.1 ⼀个除数为 ￾ 的错误](#81-个除数为--的错误)
-      - [输出结果](#输出结果-24)
+      - [输出结果](#输出结果-29)
     - [8.2 撰写异常处理程序 try - except - else - finally](#82-撰写异常处理程序-try---except---else---finally)
-      - [输出结果](#输出结果-25)
+      - [输出结果](#输出结果-30)
     - [8.3 ⾃定义异常与丢出异常](#83-定义异常与丢出异常)
-      - [输出结果](#输出结果-26)
+      - [输出结果](#输出结果-31)
   - [9. 模块化编程](#9-模块化编程)
     - [9.1 math 模块](#91-math-模块)
-      - [输出结果](#输出结果-27)
-    - [9.2 random 模块](#92-random-模块)
-      - [输出结果](#输出结果-28)
-    - [9.3 ⽇期时间模块](#93-期时间模块)
-      - [输出结果](#输出结果-29)
-    - [9.4 ⾃定义模块](#94-定义模块)
-      - [输出结果](#输出结果-30)
-    - [9.5 第三⽅模块](#95-第三模块)
-      - [输出结果](#输出结果-31)
-    - [9.5.1 ⽹络爬⾍](#951-络爬)
       - [输出结果](#输出结果-32)
-    - [9.5.2 ⾃动化](#952-动化)
+    - [9.2 random 模块](#92-random-模块)
       - [输出结果](#输出结果-33)
-    - [9.5.3 数据分析及可视化](#953-数据分析及可视化)
+    - [9.3 ⽇期时间模块](#93-期时间模块)
       - [输出结果](#输出结果-34)
-    - [9.5.4 WEB开发](#954-web开发)
+    - [9.4 ⾃定义模块](#94-定义模块)
       - [输出结果](#输出结果-35)
-    - [9.5.5 机器学习](#955-机器学习)
+    - [9.5 第三⽅模块](#95-第三模块)
       - [输出结果](#输出结果-36)
-    - [9.5.6 其他常⽤](#956-其他常)
+    - [9.5.1 ⽹络爬⾍](#951-络爬)
       - [输出结果](#输出结果-37)
+    - [9.5.2 ⾃动化](#952-动化)
+      - [输出结果](#输出结果-38)
+    - [9.5.3 数据分析及可视化](#953-数据分析及可视化)
+      - [输出结果](#输出结果-39)
+    - [9.5.4 WEB开发](#954-web开发)
+      - [输出结果](#输出结果-40)
+    - [9.5.5 机器学习](#955-机器学习)
+      - [输出结果](#输出结果-41)
+    - [9.5.6 其他常⽤](#956-其他常)
+      - [输出结果](#输出结果-42)
 
 # 与AI相关的Python
 ## 基本类型与基本运算
@@ -816,23 +823,165 @@ print(clist)
 [(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15)]
 ```
 ### 4.2 while循环
+* 这也是一个循环, 基本上循环会一直执行, 直到条件运算为 False 才会离开循环, 所以设计 while 循环时一定要设计一个条件可以离开循环, 相当于让循环结束.
+* 程序设计时, 如果忘了设计可以离开循环的条件, 程序会造成无限循环状态.
+* 一般 while 循环使用的是条件控制循环, 在符合特定条件下执行, for 循环则是一种计数循环, 会重复执行特定次数.
+#### 认识哨兵值
+* 在程序设计时, 我们可以在 while 循环中设定一个输入数值当做循环执行结束的值, 这个值称哨兵值 (sentinel value)
+  
+需求 1 : 有一筐鸡蛋, 至少有两个, 两个两个数, 多一个, 三个三个数, 多一个, 四个四个数, 还是多一个, 请问, 至少有几个?
 ```python
+count = 2
+# 死循环
+while True:
+# 判断
+    if count % 2 == 1 and count % 3 == 1 and count % 4 == 1:
+        print(f'{count = }')
+        break
+    count += 1
 
 ```
 #### 输出结果
 
 ```python
-
+count = 13
 ```
+#### 哨兵值
+```python
+print('人机复读机对话!')
+# 哨兵值
+active = True
+while active:
+    dialog = input() # 用户输入对话 (没有提示词)
+if dialog == 'quit': # 退出
+    active = False # 将哨兵值修改为 `假`
+print(dialog)
+```
+#### 输出结果
+
+```python
+人机复读机对话!
+hello
+hello
+how old are you
+how old are you
+怎么老是你呀
+怎么老是你呀
+quit
+quit
+```
+
 ## 5. 函数定义
 ```python
+# 定义一个函数
+# 1. 返回值类型 void, int, float, double, list, dict ...
+# 2. 函数名 (见名知意)
+# 3. 参数列表 (数据往往是需要指定类型)
+# def greeting(name, age):
+# pass # 让语法检测先通过
+def greeting(name: str, age: int) -> str:
+    name = name.title() # 名字的首字母大写
+    # age 修改
+    age = 18
+    return f'Hello {name}, you are {age} years old. you are very handsome.'
+# 调用函数
+msg = greeting('jack', 18)
+print(f'{msg = }')
+```
+#### 输出结果
+
+```python
+msg = 'Hello Jack, you are 18 years old. you are very handsome.'
+```
+回传多个数据的应用 (实质是回传tuple)
+
+```python
+# 定义函数 : 返回多个结果
+def math_operation(x: int, y: int) -> tuple:
+  add = x + y
+  minus = x - y
+  multiply = x * y
+  divide = x / y
+  return add, minus, multiply, divide
+result = math_operation(5, 2)
+print(f'{result = }, {type(result) = }')
+```
+#### 输出结果
+
+```python
+result = (7, 3, 10, 2.5), type(result) = <class 'tuple'>
+```
+在设计Python的函数时, 有时候可能会碰上不知道会有多少个参数会传递到这个函数, 此时可以用下列方式设计.
+```python
+# 定义函数 : 参数是不定长参数
+def math_operation(*args) -> int:
+    # args 本质是元组类型
+    res = 0
+    for arg in args:
+        res += arg
+    return res
+r = math_operation(1,2,3,4,5)
+print(f'{r = }')
+```
+#### 输出结果
+
+```python
+r = 15
+```
+我们可以设计含任意数量关键词参数的函数, 方法是在函数内使用 **kwarg(kwargs是程序设计师可以自行命名的参数, 可以想成 key word argumengs) 这是关键词参数将会变成任意数量的字典元素, 其中自变量是键, 对应的值是字典的值
+
+```python
+# 定义函数 : 关键字参数
+def store_info(name: str, **kwargs) -> dict:
+    # keyword arguments 关键字参数, 本质是一个字典类型
+    # 功能 : 存储对应姓名的学生信息
+    # :param name: 学生姓名
+    # :param kwargs: python: 编程成绩 chinese: 语文成绩 math: 数学成绩 englis h: 英语成绩
+    # :return: 返回一个封装完毕的字典数据 {name: 姓名, score: 总成绩}
+
+    name = name.title() # 名字首字母大写
+    python = kwargs['python']
+    chinese = kwargs['chinese']
+    math = kwargs['math']
+    english = kwargs['english']
+    # 将四科成绩实现累加
+    score = python + chinese + math + english
+    return {'name': name, 'score': score}
+# 调用
+r = store_info('jack', python=90, math=98, chinese=100, english=60)
+print(f'{r = }')
 
 ```
 #### 输出结果
 
 ```python
-
+r = {'name': 'Jack', 'score': 348}
 ```
+
+匿名函数最大特色是可以有许多的参数, 但是只能有一个程序表达式, 然后可以将执行结果回传
+```python
+# 匿名函数 lambda 表达式
+def square(x):
+    return x*x
+r1 = square(5)
+print(r1)
+
+# 这个就是匿名函数
+lambda x: x*x
+# filter(func, iterable) 过滤函数 Python
+
+alist = [i for i in range(1, 101, 1)]
+# r = filter(lambda x: x % 3 == 0, alist)
+r = list(filter(lambda x: x % 3 == 0, alist))
+print(r)
+```
+#### 输出结果
+
+```python
+25
+[3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99]
+```
+
 ## 6. ⾯向对象
 ```python
 
