@@ -18,18 +18,18 @@ class Worm(Food):
         super().__init__('虫子')
 # Animal 类
 class Animal(ABC):
-# 构造方法 Animal()
+    # 构造方法 Animal()
     def __init__(self, name):
         self.name = name
-# getter 方法
-@property
-def name(self):
-# 逻辑判断
-    if self.__name:
-        return self.__name # __变量 这就是私有属性
-    else:
-        return '没有名字'
-    # setter 方法
+    # @property 类似js 里的getter 方法
+    @property
+    def name(self):
+        # 逻辑判断
+        if self.__name:
+            return self.__name # __变量 这就是私有属性
+        else:
+            return '没有名字'
+    # @name.setter 类似js 里的setter 方法
     @name.setter
     def name(self, name):
         # 逻辑判断
