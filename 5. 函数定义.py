@@ -13,6 +13,7 @@ def greeting(name: str, age: int) -> str:
 msg = greeting('jack', 18)
 print(f'{msg = }')
 
+# 不指定类型，返回的就是元组类型tuple， 类型tuple类型不可以一改变数据类型
 def math_operation(x: int, y: int) -> tuple:
   add = x + y
   minus = x - y

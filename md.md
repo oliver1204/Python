@@ -59,39 +59,36 @@
       - [输出结果](#输出结果-25)
       - [输出结果](#输出结果-26)
   - [6. ⾯向对象](#6-向对象)
+      - [抽象类的介绍](#抽象类的介绍)
+      - [多态练习](#多态练习)
       - [输出结果](#输出结果-27)
   - [7. ⽂件操作](#7-件操作)
-      - [输出结果](#输出结果-28)
+      - [非文件文件复制](#非文件文件复制)
+      - [登录日志综合案例](#登录日志综合案例)
   - [8. 异常处理](#8-异常处理)
-    - [8.1 ⼀个除数为 ￾ 的错误](#81-个除数为--的错误)
-      - [输出结果](#输出结果-29)
+    - [8.1 ⼀个除数为 0 的错误](#81-个除数为-0-的错误)
+      - [输出结果](#输出结果-28)
     - [8.2 撰写异常处理程序 try - except - else - finally](#82-撰写异常处理程序-try---except---else---finally)
-      - [输出结果](#输出结果-30)
+      - [输出结果](#输出结果-29)
     - [8.3 ⾃定义异常与丢出异常](#83-定义异常与丢出异常)
-      - [输出结果](#输出结果-31)
+      - [输出结果](#输出结果-30)
   - [9. 模块化编程](#9-模块化编程)
     - [9.1 math 模块](#91-math-模块)
-      - [输出结果](#输出结果-32)
+      - [输出结果](#输出结果-31)
     - [9.2 random 模块](#92-random-模块)
-      - [输出结果](#输出结果-33)
+      - [输出结果](#输出结果-32)
     - [9.3 ⽇期时间模块](#93-期时间模块)
-      - [输出结果](#输出结果-34)
+      - [输出结果](#输出结果-33)
     - [9.4 ⾃定义模块](#94-定义模块)
+      - [输出结果](#输出结果-34)
       - [输出结果](#输出结果-35)
     - [9.5 第三⽅模块](#95-第三模块)
-      - [输出结果](#输出结果-36)
     - [9.5.1 ⽹络爬⾍](#951-络爬)
-      - [输出结果](#输出结果-37)
     - [9.5.2 ⾃动化](#952-动化)
-      - [输出结果](#输出结果-38)
     - [9.5.3 数据分析及可视化](#953-数据分析及可视化)
-      - [输出结果](#输出结果-39)
     - [9.5.4 WEB开发](#954-web开发)
-      - [输出结果](#输出结果-40)
     - [9.5.5 机器学习](#955-机器学习)
-      - [输出结果](#输出结果-41)
     - [9.5.6 其他常⽤](#956-其他常)
-      - [输出结果](#输出结果-42)
 
 # 与AI相关的Python
 ## 基本类型与基本运算
@@ -912,6 +909,7 @@ print(f'{result = }, {type(result) = }')
 result = (7, 3, 10, 2.5), type(result) = <class 'tuple'>
 ```
 在设计Python的函数时, 有时候可能会碰上不知道会有多少个参数会传递到这个函数, 此时可以用下列方式设计.
+函数返回的数据可以不指定类型，返回的就是元组类型tuple， 类型tuple类型不可以一改变数据类型
 ```python
 # 定义函数 : 参数是不定长参数
 def math_operation(*args) -> int:
@@ -931,31 +929,17 @@ r = 15
 我们可以设计含任意数量关键词参数的函数, 方法是在函数内使用 **kwarg(kwargs是程序设计师可以自行命名的参数, 可以想成 key word argumengs) 这是关键词参数将会变成任意数量的字典元素, 其中自变量是键, 对应的值是字典的值
 
 ```python
-# 定义函数 : 关键字参数
-def store_info(name: str, **kwargs) -> dict:
-    # keyword arguments 关键字参数, 本质是一个字典类型
-    # 功能 : 存储对应姓名的学生信息
-    # :param name: 学生姓名
-    # :param kwargs: python: 编程成绩 chinese: 语文成绩 math: 数学成绩 englis h: 英语成绩
-    # :return: 返回一个封装完毕的字典数据 {name: 姓名, score: 总成绩}
-
-    name = name.title() # 名字首字母大写
-    python = kwargs['python']
-    chinese = kwargs['chinese']
-    math = kwargs['math']
-    english = kwargs['english']
-    # 将四科成绩实现累加
-    score = python + chinese + math + english
-    return {'name': name, 'score': score}
-# 调用
-r = store_info('jack', python=90, math=98, chinese=100, english=60)
-print(f'{r = }')
+python = 90 chinese = 100 math = 98 english = 60
+python = 90 chinese = 100 math = 98 english = 60
+r = {'name': 'Jack', 'score': 348} r1 = {'name': 'Jack', 'score': 348}
 
 ```
 #### 输出结果
 
 ```python
-r = {'name': 'Jack', 'score': 348}
+python = 90 chinese = 100 math = 98 english = 60
+python = 90 chinese = 100 math = 98 english = 60
+r = {'name': 'Jack', 'score': 348} r1 = {'name': 'Jack', 'score': 348}
 ```
 
 匿名函数最大特色是可以有许多的参数, 但是只能有一个程序表达式, 然后可以将执行结果回传
@@ -983,27 +967,190 @@ print(r)
 ```
 
 ## 6. ⾯向对象
-```python
+设计两个共性的 动物类 与 食物类
+动物类子类有: 狗类,猫类,鸟类都继承自动物类. 有名称属性, 和吃的行为.
+食物类子类有 : 骨头, 鱼, 虫子
+最后设计一个Person类,拥有喂动物的行为.
 
+思考 :
+1. 当父类的某些方法, 需要声明, 但是又不确定如何实现时, 怎么办?
+2. 不需要实例化父类对象, 父类主要作用是设计和制定规范, 让其它类来继承并实现, 怎么办?
+3. 解决方案 -> 抽象类
+#### 抽象类的介绍
+1. 默认情况下, Python不提供抽象类, Python附带一个模块, 该模块为定义抽象基类提供了基础, 该模块名称为 ABC
+2. 当我们需要抽象基类时, 让类继承 ABC (abc模块的ABC类), 使用 @abstractmethod 声明抽象方法 (@abstractmethod 用于声明抽象方法的装饰器, 在abc模块中), 那么这个类就是抽象类
+3. 抽象类的价值更多作用是在于设计, 是设计者设计好后, 让子类继承并实现抽象类的抽象方法
+#### 多态练习
+```python
+# 综合案例 : 面向对象中的四大特性 (封装, 继承, 多态, 抽象)
+# 导入 Abstract Base Class 抽象基类 abstractmethod 抽象方法的装饰器
+from abc import ABC, abstractmethod
+# Food 类
+class Food(object):
+    # 构造方法
+    def __init__(self, name):
+        self.name = name
+# 子类
+class Bone(Food):
+    def __init__(self):
+        super().__init__('骨头')
+class Fish(Food):
+    def __init__(self):
+        super().__init__('鱼')
+class Worm(Food):
+    def __init__(self):
+        super().__init__('虫子')
+# Animal 类
+class Animal(ABC):
+# 构造方法 Animal()
+    def __init__(self, name):
+        self.name = name
+# getter 方法
+@property
+def name(self):
+# 逻辑判断
+    if self.__name:
+        return self.__name # __变量 这就是私有属性
+    else:
+        return '没有名字'
+    # setter 方法
+    @name.setter
+    def name(self, name):
+        # 逻辑判断
+        if isinstance(name, str):
+            self.__name = name.title()
+        else:
+            self.__name = None # 空对象
+        # 吃的行为
+        # 父类中的 eat() 行为本质上是一个抽象行为, 需要让子类必须重写该行为
+        @abstractmethod
+        def eat(self, food: Food):... # 这是一个抽象方法, 没有实现了. 要求子类必须重写父类的该行为
+
+
+# 子类 `继承` 父类
+class Dog(Animal):
+    def __init__(self, name):
+    # 调用父类的构造方法
+    # super(Dog, self).__init__(name)
+        super().__init__(name)
+    # 子类要重写父类的 eat() 行为
+    def eat(self, food: Food):
+        print(f'{self.name}正在吃{food.name}.')
+    # 特有行为
+    def bomb_blockhouse(self):
+        print(f'{self.name}正在疯狂的炸碉堡...')
+
+class Cat(Animal):
+    def __init__(self, name):
+     super().__init__(name)
+    def eat(self, food: Food):
+        print(f'{self.name}正在吃{food.name}.')
+    # 特有行为
+    def mymoe(self):
+        print(f'{self.name}正在疯狂卖萌...')
+
+class Bird(Animal):
+    def __init__(self, name: str):
+        super().__init__(name)
+    def eat(self, food: Food):
+
+        print(f'{self.name}正在吃{food.name}.')
+    # 特有行为
+    def pole_dance(self):
+        print(f'{self.name}正在疯狂跳钢管舞...')
+    # 定义一个 Person 类
+class Person(object):
+    # 构造方法
+    def __init__(self, name):
+        self.name = name
+    # 喂动物吃东西的行为
+    def feed(self, animal: Animal, food: Food): # 多态: 父类引用可以接收子类对象
+        print(f'{self.name}正在喂{animal.name}吃东西...')
+        # 使用 animal 对象调用 eat() 行为
+        animal.eat(food)
+        print(f'{animal.name}吃饱了. 准备给 {self.name} 表演一个!!!')
+        # 准备调用 animal 对象的特有行为
+        if isinstance(animal, Dog):
+            animal.bomb_blockhouse()
+        elif isinstance(animal, Cat):
+            animal.mymoe()
+        elif isinstance(animal, Bird):
+            animal.pole_dance()
+# 测试
+p = Person('孙悟空')
+dog = Dog('哮天犬')
+cat = Cat('加菲猫')
+bird = Bird('鹦鹉')
+bone = Bone()
+fish = Fish()
+worm = Worm()
+p.feed(cat, fish)
 ```
 #### 输出结果
 
 ```python
-
+孙悟空正在喂加菲猫吃东西...
+加菲猫正在吃鱼.
+加菲猫吃饱了. 准备给 孙悟空 表演一个!!!
+加菲猫正在疯狂卖萌...
 ```
 ## 7. ⽂件操作
+文件的类型 : 按文件中数据的组织形式, 文件分为以下两大类
+1.文本文件: 存储的是普通字符文件, 默认为 unicode字符集, 可以使用记事本程序打开.
+2.二进制文件: 把数据内容用，字节 进行存储, 无法用记事本打开, 必须使用专门的软件打开.
+举例: mp3音频文件, jpg图片, doc文档等.
+with语句可以自动管理上下文资源, 不论什么原因跳出with块,都能确保文件正确的关闭, 以此来达到释放资源的目的.
 ```python
+# 文本文件路径
+source_path = r'D:\test.txt'
+destination_path = r'D:\copy.txt'
 
+# 文件文件复制
+# mode='rt' read text mode='wt' write text
+with open(source_path, mode='rt', encoding='utf-8') as reader:
+    content = reader.read() # 读取文件中的所有数据
+    with open(destination_path, 
 ```
-#### 输出结果
 
+#### 非文件文件复制
+
+```python
+# 非文件文件复制# 非文本文件路径
+source_path = r'D:\桌面logo.jpg'
+destination_path = r'D:\logo.jpg'
+# 非文件文件复制
+# mode='rb' read binary mode='wb' write binary
+with open(source_path, mode='rb') as reader:
+    content = reader.read() # 读取文件中的所有数据
+    with open(destination_path, mode='wb') as writer:
+        writer.write(content)   
+```
+
+#### 登录日志综合案例
+1. 实现登录验证, 如果用户名是列表中的元素 ['Smith', 'Tom', 'Jack'], 密码'888' 则登录成功, 否则失败
+2. 不管登录是否成功, 都需要在文件中记录登录的信息
+3. 登录成功, 可以看到相应的操作菜单提示, 请实现相应的功能
 ```python
 
 ```
 ## 8. 异常处理
-### 8.1 ⼀个除数为 ￾ 的错误
-```python
+有时也可以将程序错误 (error) 称作程序异常 (exception)
 
+相信每一位写程序的人一定会常常碰上程序错误,过去碰上这类情况程序将终止执行, 同时出现错误信息, 错误信息内容通常是显示Traceback, 然后列出异常报告
+
+Python可以让我们捕捉异常和撰写异常处理程序, 当异常被捕捉时会去执行异常处理程序, 然后程序可以继续执行.
+### 8.1 ⼀个除数为 0 的错误
+```python
+# 异常 : 如果不处理异常, 程序就会提前终止
+def division(x, y):
+    return x / y
+    
+print(division(2, 3))
+# 这条语句会发生程序的异常.
+# ZeroDivisionError: division by zero
+print(division(4, 0))
+# 分析 : 以下的输出语言可以被执行吗?
+print(division(4, 1))
 ```
 #### 输出结果
 
@@ -1011,120 +1158,323 @@ print(r)
 
 ```
 ### 8.2 撰写异常处理程序 try - except - else - finally
+Python 的关键词 finally 功能是和 try 配合使用
+, 在try 之后可以有 except 或 else, 这个 finally 关键词必
+须放在 except 和 else 之后, 同时不论是否有异常发生一定会执行这个 finally 内的程序代码.
 ```python
+# 异常 : 如果不处理异常, 程序就会提前终止
+def division(x, y):
+    # 需要将可能发生异常的逻辑代码放到 try 语句中
+    try:
+        # 这里有很多的逻辑执行语句...
+        v = x / y
+    except ZeroDivisionError as e:
+        print(e)
+        return '除数不能为0!'
+    except TypeError as e:
+        print(e)
+        return '数据类型错误, 需要使用整型数据.'
+    except BaseException as e: # 兜底处理
+        print(e)
+        return '发生了异常!'
+    else:
+        # 如果 try 语句中执行一切正常, 则 else 语句会被执行.
+        # 如果发生了异常, else 语句就不会被执行
+        return v
+    finally:
+        # 这里的代码是用于释放资源 (文件资源, 连接池资源, 数据库资源...)
+        # 无论是否发生了异常, finally 语句快都会在 return 之前被执行    
+        print('finally 语句块被执行...')
 
+        
+print(division(2, 3))
+print(division(4, 0))
+print(division(4, '2'))
+print(division(4, 1))
 ```
 #### 输出结果
 
 ```python
-
+finally 语句块被执行...
+0.6666666666666666
+division by zero
+finally 语句块被执行...
+除数不能为0!
+unsupported operand type(s) for /: 'int' and 'str'
+finally 语句块被执行...
+数据类型错误, 需要使用整型数据.
+finally 语句块被执行...
+4.0
 ```
 ### 8.3 ⾃定义异常与丢出异常
-```python
+前面介绍的异常皆是Python直译器发现异常时, 自行丢出异常对象, 如果我们不处理程序就终止执行, 如果我们使用 try-except 处理程序可以在异常中继续执行.
 
+我们自己将它定义为异常然后丢出异常信息, 程序停止正常往下执行, 同时让程序跳到自己设计的except 去执行.
+```python
+# 自定义异常类
+class AgeException(BaseException):
+    # 构造方法
+    def __init__(self, msg):
+        super().__init__(msg)
+# 自定义函数
+def check_age(age):
+    if age < 18:
+        # 抛出自定义异常对象
+        raise AgeException('你未成年, 不能购买烟酒, 不能去98嗨~~')
+    else:
+        print('恭喜你成年了, 来, 跟我一起high~~~')
+# 测试
+try:
+    age = int(input('亲, 请输入您的年龄: '))
+    # 调用自定义函数
+    check_age(age)
+except AgeException as e:
+    print(e)
+    
+print('继续执行后续代码...')
 ```
 #### 输出结果
 
 ```python
-
+亲, 请输入您的年龄: 32
+恭喜你成年了, 来, 跟我一起high~~~
+继续执行后续代码...
 ```
 ## 9. 模块化编程
-### 9.1 math 模块
-```python
+在真正做项目时, 我们会使用别人已经开发好的模块, 这样就不必从零开发项目了, 还可以加快开发速度,这些模块可能是Python官方提供的, 也可能是第三方开发的.Python官方提供的模块,就叫做 内置模块.
 
+Python可以说是一个模块化编程的高级语言.
+### 9.1 math 模块
+在math模块中包含数学运算相关的函数, 例如指数, 对数, 平方根和三角函数等.
+```python
+# 导入模块
+import math
+# 20实际最美的数学公式 : 欧拉 e的iπ + 1 = 0
+# math 模块
+print(math.pi)
+print(math.tau)
+print(math.e)
+# 阶乘 (递归函数)
+r = math.factorial(5)
+print(r)
+# 欧几里得 (初高中几何 -> 源自于 <几何原本>)
+# 最大公约数
+print(math.gcd(40, 104))
+# 最小公倍数
+print(math.lcm(40, 104))
 ```
 #### 输出结果
 
 ```python
-
+3.141592653589793
+6.283185307179586
+2.718281828459045
+120
+8
+520
 ```
 ### 9.2 random 模块
-```python
+所谓的随机数是指平均散布在某区间的数字, 随机数其实用途很广, 最常见的应用是设计游戏时可以控制输出结果, 赌场的老虎机器就是靠它赚钱. 我们将介绍random模块中最有用的几个方法, 同时也会分析赌场赚钱的原因.
+| 函数名称     | 说明  | 
+| -------- | ------------ | 
+| randint(x, y)     | 产生x(含)到y(含)的随机整数   | 
+| random( )     | 产生0(含)到1(不含)的随机浮点数     | 
+| uniform(x, y)     | 产生x(含)到y(不含)的随机浮点数      | 
+| choice(列表) | 可以在列表中随机回传一个元素      | 
+| shume(列表)     | 可以在列表中随机回传一个元素    | 
+| sample(列表,数量)   | 随机回传第2个参数数量的列表元素     | 
+| seed(x)   | X是种子值，未来每次可以产生相同的随机数     |
 
+
+```python
+import random
+# 执行范围的随机整数
+r1 = random.randint(1, 10)
+print(f'{r1 = }')
+# 0.0 ~ 1.0 浮点值
+print(random.random())
+print(random.choice(['a', 'b', 'c']))
+print(random.sample(['a', 'b', 'c'], 2))
+alist = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+random.shuffle(alist) # 洗牌, 随机置换
+print(alist)
 ```
 #### 输出结果
 
 ```python
-
+0.33560066760968
+a
+['c', 'b']
+['a', 'g', 'b', 'i', 'j', 'e', 'd', 'f', 'c', 'h']
 ```
 ### 9.3 ⽇期时间模块
+| strftime( )参数     | 意义  | 
+| -------- | ------------ | 
+| %Y    | 含世纪的年份，例如:'2020’   | 
+| %y    | 不含世纪的年份，例如:'20' 代表 '2020’     | 
+| %B     | 用完整英文代表月份，例如:'January’代表1月    | 
+| %b     | 用缩写英文代表月份，例如:'Jan’代表1月      | 
+| %m    | 用数字代表月份，“01’~'12’   | 
+| %j   | 该年的第几天，'001’~'366    | 
+| %d   | 该月的第几天，'01’~'31’     |
+｜%A    ｜用完整英文代表星期几，例如:'Sunday’代表星期日｜
+｜%a   ｜用缩写英文代表星期几，例如:'Sun’代表星期日｜
+｜%w    ｜用数字代表星期几，'0’星期日~'6’星期六｜
+｜%H     ｜24 小时制，'00’~'23｜
+｜%I   ｜12 小时制，'01’~'12｜
+｜%M   ｜分，'00’~'59’｜
+｜%S   ｜秒，'00’~'59’｜
+｜%P   ｜'AM’或'PM｜
 ```python
-
+# 第一个 datetime 表示的是模块的名称
+# 第二个 datetime 表示的是类名
+from datetime import datetime, timedelta # 微小的时间间隔
+today = datetime.today()
+print(f'{today = }')
+now = datetime.now()
+print(f'{now = }')
+# 将日期时间对象按照指定的模式转换为字符串格式时间数据
+# f -> format 格式化
+now_str = now.strftime('%Y-%m-%d %H:%M:%S')
+print(now_str, type(now_str))
+# 将字符串类型的数据转换为时间日期类型的数据
+# p -> parse 解析
+date_str = '2008年08月08日 00:10:50'
+d = datetime.strptime(date_str, '%Y年%m月%d日 %H:%M:%S')
+print(f'{d = }, {type(d)}')
+# timedelta 微小的时间间隔
+# 需求 : 从现在向后推, 100 之后是哪一天 ?
+# now + 100 # datetime + int
+future = now + timedelta(days=100)
+print(f'{future = }')
 ```
 #### 输出结果
 
 ```python
-
+today = datetime.datetime(2026, 10, 28, 17, 22, 19, 537320)
+now = datetime.datetime(2026, 10, 28, 17, 22, 19, 537522)
+2026-10-28 17:22:19 <class 'str'>
+d = datetime.datetime(2008, 8, 8, 0, 10, 50), <class 'datetime.datetime'>
+future = datetime.datetime(2027, 2, 5, 17, 22, 19, 537522)
 ```
 ### 9.4 ⾃定义模块
-```python
+`思考 :` 什么要自定义模块?
+答 : 在实际开发中, Python提供的标准库模块不能满足开发需求, 程序员需要一些个性化的模块, 就可以进行自定义模块的实现.
+`说明：`模块导入 - 基本语法
+[from 模块名] import (函数 | 类 | 变量 | *) [as 别名]
+1. [ ] 是可选项
+2. 可以根据需求, 选择合适的形式进行导入
+`思考 :` 为什么需要包?
+在一个实际的项目, 可能需要很多个模块, 当模块文件越来越多, 如果我们将所有的模块文件都放在同一个文件夹, 就会带来很多问题, 不利于管理和调用, 怎么办?
 
+`说明：`
+1. 这里写了六个模块文件, 实际上可能有很多的模块文件.
+2. 把所有的模块文件, 都放到一个目录下, 必然造成管理的混乱.
+3. 怎么办? -> 包
+```python
+today = datetime.datetime(2026, 10, 28, 17, 22, 19, 537320)
+now = datetime.datetime(2026, 10, 28, 17, 22, 19, 537522)
+2026-10-28 17:22:19 <class 'str'>
+d = datetime.datetime(2008, 8, 8, 0, 10, 50), <class 'datetime.datetime'>
+future = datetime.datetime(2027, 2, 5, 17, 22, 19, 537522)
 ```
 #### 输出结果
 
 ```python
-
+这个冰淇淋的配料如下: 
+         草莓酱
+         葡萄干
+         巧克力碎片
+您点的饮料如下: 
+         大杯
+         Black Coffee
 ```
+
+```python
+# import makefood
+# from makefood import make_icecream, make_drink
+import makefood as m
+# main 函数
+if __name__ == '__main__':
+    # 使用模块
+    # makefood.make_icecream('草莓酱', '葡萄干', '巧克力碎片')
+    # makefood.make_drink('大杯', 'black coffee')
+    # make_icecream('草莓酱', '葡萄干', '巧克力碎片')
+    # make_drink('大杯', 'black coffee')
+    m.make_icecream('草莓酱', '葡萄干','巧克力碎片')
+    m.make_drink('大杯', 'black coffee')
+    print('hello world!')
+```
+#### 输出结果
+
+```python
+这个冰淇淋的配料如下:
+    草莓酱
+    葡萄干
+    巧克力碎片
+您点的饮料如下:
+    大杯
+    Black Coffee
+hello world!
+```
+
 ### 9.5 第三⽅模块
-```python
+看见更大的 Python 世界 -> https://pypi.org/
+pip有哪些命令可以使用，可以使用 pip help 命令来查看：
 
-```
-#### 输出结果
-
-```python
-
-```
 ### 9.5.1 ⽹络爬⾍
-```python
-
-```
-#### 输出结果
-
-```python
-
-```
+* requests-对HTTP协议进行高度封装，支持非常丰富的链接访问功能。
+* PySpider-一个国人编写的强大的网络爬虫系统并带有强大的WebUI。
+* bs4-beautifulsoup4库，用于解析和处理HTML和XML。
+* Scrapy-很强大的爬虫框架，用于抓取网站并从其页面中提取结构化数据。可用于从数据挖掘到监控和自动化测试的各种用途
+* Crawley-高速爬取对应网站的内容，支持关系和非关系数据库，数据可以导出为JSON、XML等
+* Portia-可视化爬取网页内容
+* cola-分布式爬虫框架
+* newspaper-提取新闻、文章以及内容分析
+* lxml-lxml是python的一个解析库，这个库支持HTML和xml的解析，支持XPath的解析方式
 ### 9.5.2 ⾃动化
-```python
-
-```
-#### 输出结果
-
-```python
-
-```
+* XlsxWriter-操作Excel工作表的文字，数字，公式，图表等
+* win32com-有关Windows系统操作、Office（Word、Excel等）文件读写等的综合应用库
+* pymysql-操作MySQL数据库
+* pymongo-把数据写入MongoDB
+* smtplib-发送电子邮件模块selenium-一个调用浏览器的driver，通过这个库可以直接调用浏览器完成某些操作，比如输入验证码，常用来进行浏览器的自动化工作。
+* pdfminer-一个可以从PDF文档中提取各类信息的第三方库。与其他PDF相关的工具不同，它能够完全获取并分析 P D F 的文本数据
+* PyPDF2-一个能够分割、合并和转换PDF页面的库。
+* openpyxl- 一个处理Microsoft Excel文档的Python第三方库，它支持读写Excel的xls、xlsx、xlsm、xltx、xltm。
+* python-docx-一个处理Microsoft Word文档的Python第三方库，它支持读取、查询以及修改doc、docx等格式文件，并能够对Word常见样式进行编程设置。
 ### 9.5.3 数据分析及可视化
-```python
-
-```
-#### 输出结果
-
-```python
-
-```
+* matplotlib-Matplotlib 是一个 Python 2D 绘图库，可以生成各种可用于出版品质的硬拷贝格式和跨平台交互式环境数据。Matplotlib 可用于 Python 脚本，Python 和 IPython shell（例如 MATLAB或 Mathematica），Web 应用程序服务器和各种图形用户界面工具包。”
+* numpy-NumPy 是使用 Python 进行科学计算所需的基础包。用来存储和处理大型矩阵，如矩阵运算、矢量处理、N维数据变换等。
+* pyecharts-用于生成 Echarts 图表的类库
+* pandas-一个强大的分析结构化数据的工具集，基于numpy扩展而来，提供了一批标准的数据模型和大量便捷处理数据的函数和方法。
+* Scipy: 基于Python的matlab实现，旨在实现matlab的所有功能，在numpy库的基础上增加了众多的数学、科学以及工程计算中常用的库函数。
+* Plotly-Plotly提供的图形库可以进行在线WEB交互，并提供具有出版品质的图形，支持线图、散点图、区域图、条形图、误差条、框图、直方图、热图、子图、多轴、极坐标图、气泡图、玫瑰图、热力图、漏斗图等众多图形
+* wordcloud-词云生成器
+* jieba-中文分词模块
 ### 9.5.4 WEB开发
-```python
+* Django-一个开放源代码的Web应用框架，由Python写成。 是Python生态中最流行的开源Web应用框架，Django采用模型、模板和视图的编写模式，称为MTV模式。
+* Pyramid是一个通用、开源的Python Web应用程序开发框架。它主要的目的是让* Python开发者更简单的创建Web应用，相比Django，Pyramid是一个相对小巧、快速、灵活的开源Python Web框架。
+* Tornado-一种 Web 服务器软件的开源版本。Tornado和现在的主流Web服务器框架（包括大多数Python的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快
+* Flask是轻量级Web应用框架，相比Django和Pyramid，它也被称为微框架。使用Flask开发Web应用十分方便，甚至几行代码即可建立一个小型网站。Flask核心十分简单，并不直接包含诸如数据库访问等的抽象访问层，而是通过扩展模块形式来支持。
 
-```
-#### 输出结果
-
-```python
-
-```
 ### 9.5.5 机器学习
-```python
+* NLTK-一个自然语言处理的第三方库，NLP领域中常用，可建立词袋模型（单词计数），支持词频分析（单词出现次数）、模式识别、关联分析、情感分析（词频分析+度量指标）、可视化+matploylib做分析图）等
+* TensorFlow-谷歌的第二代机器学习系统，是一个使用数据流图进行数值计算的开源软件库。
+* Keras -是一个高级神经网络 API，用 Python 编写，能够在 TensorFlow，CNTK 或 Theano 之上运行。它旨在实现快速实验，能够以最小的延迟把想法变成结果，这是进行研究的关键。”
+* Caffe-一个深度学习框架，主要用于计算机视觉，它对图像识别的分类具有很好
+的应用效果
+* theano-深度学习库。它与Numpy紧密集成，支持GPU计算、单元测试和自我验证，为执行深度学习中大规模神经网络算法的运算而设计，擅长处理多维数组。
+* Scikit-learn-是一个简单且高效的数据挖掘和数据分析工具，它基于NumPy、SciPy和matplotlib构建。Scikit-learn的基本功能主要包括6个部分：分类，回归，聚类，数据降维，模型选择和数据预处理。Scikit-learn也被称为sklearn。
 
-```
-#### 输出结果
-
-```python
-
-```
 ### 9.5.6 其他常⽤
-```python
+* IPython-一个基于Python 的交互式shell，比默认的Python shell 好用得多，支持变量自动补全、自动缩进、交互式帮助、魔法命令、系统命令等，内置了许多很有用的功能和函数
+* PTVS-Visual Studio 的 Python 工具pydub-支持多种格式声音文件，可进行多种信号处理、信号生成、音效注册、静音处理等
+* TimeSide-能够进行音频分析、成像、转码、流媒体和标签处理的Python框架
+* dnspython-DNS工具包pygame-专为电子游戏设计的一个模块
+* PyQt5-pyqt5是Qt5应用框架的Python第三方库，编写Python脚本的应用界面
+* PIL(Pillow)-PIL库是Python语言在图像处理方面的重要第三方库，支持图像存储、显示和处理，它能够处理几乎所有图片格式，可以完成对图像的缩放、剪裁、叠加以及向图像添加线条、图像和文字等操作
+* OpenCV-图像和视频工作库
+* Py2exe: 将python脚本转换为windows上可以独立运行的可执行程序。
+* WeRoBot 是一个微信公众号开发框架，也称为的微信机器人框架。WeRoBot可以解
+析微信服务器发来的消息，并将消息转换成成Message或者Event类型。
 
-```
-#### 输出结果
-
-```python
-
-```

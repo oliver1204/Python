@@ -14,7 +14,10 @@ def store_info(name: str, **kwargs) -> dict:
     english = kwargs['english']
     # 将四科成绩实现累加
     score = python + chinese + math + english
+    print(f'{python = }', f'{chinese = }', f'{math = }', f'{english = }')
     return {'name': name, 'score': score}
 # 调用
 r = store_info('jack', python=90, math=98, chinese=100, english=60)
-print(f'{r = }')
+r1 = store_info('jack', chinese=100, english=60, python=90, math=98,)
+
+print(f'{r = }', f'{r1 = }')
