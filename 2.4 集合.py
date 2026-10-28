@@ -19,6 +19,7 @@ r4 = b - a
 print('差集 a - b ===',r3)
 print('差集 b - a ===',r4)
 # 对称差集
-r5 = a.symmetric_difference(b)
+r5 = a^b
+# r5 = a.symmetric_difference(b)
 print('对称差集 symmetric_difference===',r5)
 
