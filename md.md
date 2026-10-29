@@ -68,21 +68,20 @@
       - [登录日志综合案例](#登录日志综合案例)
   - [8. 异常处理](#8-异常处理)
     - [8.1 ⼀个除数为 0 的错误](#81-个除数为-0-的错误)
-      - [输出结果](#输出结果-28)
     - [8.2 撰写异常处理程序 try - except - else - finally](#82-撰写异常处理程序-try---except---else---finally)
-      - [输出结果](#输出结果-29)
+      - [输出结果](#输出结果-28)
     - [8.3 ⾃定义异常与丢出异常](#83-定义异常与丢出异常)
-      - [输出结果](#输出结果-30)
+      - [输出结果](#输出结果-29)
   - [9. 模块化编程](#9-模块化编程)
     - [9.1 math 模块](#91-math-模块)
-      - [输出结果](#输出结果-31)
+      - [输出结果](#输出结果-30)
     - [9.2 random 模块](#92-random-模块)
-      - [输出结果](#输出结果-32)
+      - [输出结果](#输出结果-31)
     - [9.3 ⽇期时间模块](#93-期时间模块)
-      - [输出结果](#输出结果-33)
+      - [输出结果](#输出结果-32)
     - [9.4 ⾃定义模块](#94-定义模块)
+      - [输出结果](#输出结果-33)
       - [输出结果](#输出结果-34)
-      - [输出结果](#输出结果-35)
     - [9.5 第三⽅模块](#95-第三模块)
     - [9.5.1 ⽹络爬⾍](#951-络爬)
     - [9.5.2 ⾃动化](#952-动化)
@@ -1206,11 +1205,7 @@ print(division(4, 0))
 # 分析 : 以下的输出语言可以被执行吗?
 print(division(4, 1))
 ```
-#### 输出结果
 
-```python
-
-```
 ### 8.2 撰写异常处理程序 try - except - else - finally
 Python 的关键词 finally 功能是和 try 配合使用
 , 在try 之后可以有 except 或 else, 这个 finally 关键词必
@@ -1290,6 +1285,10 @@ print('继续执行后续代码...')
 #### 输出结果
 
 ```python
+亲, 请输入您的年龄: 14
+你未成年, 不能购买烟酒, 不能去98嗨~~
+继续执行后续代码...
+
 亲, 请输入您的年龄: 32
 恭喜你成年了, 来, 跟我一起high~~~
 继续执行后续代码...
@@ -1305,10 +1304,10 @@ Python可以说是一个模块化编程的高级语言.
 import math
 # 20实际最美的数学公式 : 欧拉 e的iπ + 1 = 0
 # math 模块
-print(math.pi)
-print(math.tau)
-print(math.e)
-# 阶乘 (递归函数)
+print(math.pi) # 圆周率
+print(math.tau) # 圆周率 * 2
+print(math.e) # 自然常数
+# 阶乘 (递归函数) 5 * 4 * 3 * 2 * 1
 r = math.factorial(5)
 print(r)
 # 欧几里得 (初高中几何 -> 源自于 <几何原本>)
@@ -1342,7 +1341,7 @@ print(math.lcm(40, 104))
 
 ```python
 import random
-# 执行范围的随机整数
+# 执行指定范围的随机整数
 r1 = random.randint(1, 10)
 print(f'{r1 = }')
 # 0.0 ~ 1.0 浮点值
@@ -1386,51 +1385,78 @@ from datetime import datetime, timedelta # 微小的时间间隔
 today = datetime.today()
 print(f'{today = }')
 now = datetime.now()
-print(f'{now = }')
+print(f'{now = }') # today === now
 # 将日期时间对象按照指定的模式转换为字符串格式时间数据
 # f -> format 格式化
 now_str = now.strftime('%Y-%m-%d %H:%M:%S')
-print(now_str, type(now_str))
+print('===strftime:', now_str, type(now_str))
 # 将字符串类型的数据转换为时间日期类型的数据
 # p -> parse 解析
 date_str = '2008年08月08日 00:10:50'
 d = datetime.strptime(date_str, '%Y年%m月%d日 %H:%M:%S')
-print(f'{d = }, {type(d)}')
+print(' ====strptime:', f'{d = }, {type(d)}')
 # timedelta 微小的时间间隔
 # 需求 : 从现在向后推, 100 之后是哪一天 ?
 # now + 100 # datetime + int
 future = now + timedelta(days=100)
-print(f'{future = }')
+print('====timedelta', f'{future = }')
 ```
 #### 输出结果
 
 ```python
-today = datetime.datetime(2026, 10, 28, 17, 22, 19, 537320)
-now = datetime.datetime(2026, 10, 28, 17, 22, 19, 537522)
-2026-10-28 17:22:19 <class 'str'>
-d = datetime.datetime(2008, 8, 8, 0, 10, 50), <class 'datetime.datetime'>
-future = datetime.datetime(2027, 2, 5, 17, 22, 19, 537522)
+today = datetime.datetime(2026, 10, 29, 16, 47, 1, 215998)
+now = datetime.datetime(2026, 10, 29, 16, 47, 1, 216054)
+===strftime: 2026-10-29 16:47:01 <class 'str'>
+====strptime: d = datetime.datetime(2008, 8, 8, 0, 10, 50), <class 'datetime.datetime'>
+====timedelta future = datetime.datetime(2027, 2, 6, 16, 47, 1, 216054)
 ```
 ### 9.4 ⾃定义模块
 `思考 :` 什么要自定义模块?
+
 答 : 在实际开发中, Python提供的标准库模块不能满足开发需求, 程序员需要一些个性化的模块, 就可以进行自定义模块的实现.
-`说明：`模块导入 - 基本语法
+
+`说明：` 模块导入 - 基本语法
+
 [from 模块名] import (函数 | 类 | 变量 | *) [as 别名]
+
 1. [ ] 是可选项
 2. 可以根据需求, 选择合适的形式进行导入
+   
 `思考 :` 为什么需要包?
+
 在一个实际的项目, 可能需要很多个模块, 当模块文件越来越多, 如果我们将所有的模块文件都放在同一个文件夹, 就会带来很多问题, 不利于管理和调用, 怎么办?
 
 `说明：`
+
 1. 这里写了六个模块文件, 实际上可能有很多的模块文件.
 2. 把所有的模块文件, 都放到一个目录下, 必然造成管理的混乱.
 3. 怎么办? -> 包
+
+makefood.py 
 ```python
-today = datetime.datetime(2026, 10, 28, 17, 22, 19, 537320)
-now = datetime.datetime(2026, 10, 28, 17, 22, 19, 537522)
-2026-10-28 17:22:19 <class 'str'>
-d = datetime.datetime(2008, 8, 8, 0, 10, 50), <class 'datetime.datetime'>
-future = datetime.datetime(2027, 2, 5, 17, 22, 19, 537522)
+# 在自定义模块中定义一些功能
+# 制作冰淇淋
+def make_icecream(*toppings):
+    print('这个冰淇淋的配料如下: ')
+    for topping in toppings:
+        print('\t', topping) # '\t' 制表符
+
+# 制作饮料
+def make_drink(size, drink):
+    print('您点的饮料如下: ')
+    print('\t', size.title())
+    print('\t', drink.title())
+
+# 模块测试, 应该放在主函数里面，这样其他引入模块在使用该模块的时候不会执行测试模块
+# 如果没有 if __name__ == '__main__': 任何引用模块都会触发此模块执行
+if __name__ == '__main__':
+    make_icecream('草莓酱' , '葡萄干', '巧克力碎片')
+    make_drink('大杯', 'black coffee')
+
+
+# 错的模块测试代码
+# make_icecream('草莓酱' , '葡萄干', '巧克力碎片')
+# make_drink('大杯', 'black coffee')
 ```
 #### 输出结果
 
