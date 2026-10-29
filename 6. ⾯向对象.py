@@ -1,4 +1,4 @@
-# 综合案例 : 面向对象中的四大特性 (封装, 继承, 多态, 抽象)
+# 综合案例 : 本案例综合了面向对象中的四大特性 (封装, 继承, 多态, 抽象)
 # 导入 Abstract Base Class 抽象基类 abstractmethod 抽象方法的装饰器
 from abc import ABC, abstractmethod
 # Food 类
@@ -33,13 +33,14 @@ class Animal(ABC):
     @name.setter
     def name(self, name):
         # 逻辑判断
-        if isinstance(name, str):
+        if isinstance(name, str): # 判断是是否是string类型
             self.__name = name.title()
         else:
             self.__name = None # 空对象
+       
         # 吃的行为
         # 父类中的 eat() 行为本质上是一个抽象行为, 需要让子类必须重写该行为
-        @abstractmethod
+        @abstractmethod  # 装饰器
         def eat(self, food: Food):... # 这是一个抽象方法, 没有实现了. 要求子类必须重写父类的该行为
 
 

@@ -1,9 +1,10 @@
 # 文本文件路径
-source_path = r'/Users/liuziran/Desktop/ecosa/innovation/0.1.html'
-destination_path = r'/Users/liuziran/Desktop/ecosa/innovation/0.1.html'
+# r 是原生字符串
+source_path = r'text.txt' #目标原文件
+destination_path = r'duplicate_text.txt' # 复制后的文件
 
 # 文件文件复制
-# mode='rt' read text mode='wt' write text
+# open Python 内置函数，打开文件；mode='rt' 是read text 模式 mode='wt' 是write text 模式
 with open(source_path, mode='rt', encoding='utf-8') as reader:
     content = reader.read() # 读取文件中的所有数据
     with open(destination_path, mode='wt', encoding='utf-8') as writer:
@@ -11,28 +12,30 @@ with open(source_path, mode='rt', encoding='utf-8') as reader:
 
 
 # 非文件文件复制# 非文本文件路径
-source_path = r'/Users/liuziran/Desktop/ecosa/innovation/0.1.html'
-destination_path = r'/Users/liuziran/Desktop/ecosa/innovation/0.1.html'
+source_path = r'/Users/liuziran/workspace/Python/dragon_masters.png'
+destination_path = r'/Users/liuziran/workspace/Python/duplicate_dragon_masters.png'
 # 非文件文件复制
-# mode='rb' read binary mode='wb' write binary
+# mode='rb' 是read binary 模式 mode='wb' write binary
 with open(source_path, mode='rb') as reader:
     content = reader.read() # 读取文件中的所有数据
     with open(destination_path, mode='wb') as writer:
         writer.write(content)   
 
 
-import time
+import time # 时间相关的模块
 # 登录日志综合案例
 FILENAME = 'log.txt' # 相对路径
-# 写入数据到日志文件中
+# 写入数据
 def record_log(user, status):
-# append 拼接模式
+    # 'a+' 是 append 拼接模式， 因为写入数据到日志文件中, 记录日志，需要不断的拼接
     with open(FILENAME, mode='a+', encoding='utf-8') as f:
         chinese_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
         log = f'登录用户: {user}, {status}, 登录时间: {chinese_time}'
         f.write(log + '\n')
+# 读取 日志
 def read_log():
     with open(FILENAME, mode='rt', encoding='utf-8') as f:
+        # f.readlines() 可以读取多行数据，返回的是一个数组
         for line in f.readlines():
             # strip() 功能 : 去除字符串对象收尾的空格和换行
             line = line.strip()
@@ -41,8 +44,7 @@ def read_log():
 def show_menu():
     menu = '''
         **********************
-        1. 当前登录用
-        户
+        1. 当前登录用户
         2. 查看登录日志
         3. 退出系统
     '''
@@ -52,8 +54,8 @@ user = input('亲, 请输入你的用户名: ')
 pwd = input('亲, 请输入您的登录密码: ')
 # 判断
 if user in ('Jack', 'Rose', 'Peter') and pwd == '888':
-# 当前用户是注册用户, 可以登录
-    record_log(user, '登录成功')
+    # 当前用户是注册用户, 可以登录
+    record_log(user, '登录成功') # 将记录写入log.txt 文件中
     # 保证界面不退出
     while True:
         # 展示界面

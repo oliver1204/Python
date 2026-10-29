@@ -63,6 +63,7 @@
       - [多态练习](#多态练习)
       - [输出结果](#输出结果-27)
   - [7. ⽂件操作](#7-件操作)
+      - [文本文件路径](#文本文件路径)
       - [非文件文件复制](#非文件文件复制)
       - [登录日志综合案例](#登录日志综合案例)
   - [8. 异常处理](#8-异常处理)
@@ -981,8 +982,8 @@ print(r)
 2. 当我们需要抽象基类时, 让类继承 ABC (abc模块的ABC类), 使用 @abstractmethod 声明抽象方法 (@abstractmethod 用于声明抽象方法的装饰器, 在abc模块中), 那么这个类就是抽象类
 3. 抽象类的价值更多作用是在于设计, 是设计者设计好后, 让子类继承并实现抽象类的抽象方法
 #### 多态练习
+综合案例 : 本案例综合了面向对象中的四大特性 (封装, 继承, 多态, 抽象)
 ```python
-# 综合案例 : 面向对象中的四大特性 (封装, 继承, 多态, 抽象)
 # 导入 Abstract Base Class 抽象基类 abstractmethod 抽象方法的装饰器
 from abc import ABC, abstractmethod
 # Food 类
@@ -1100,8 +1101,9 @@ p.feed(cat, fish)
 2.二进制文件: 把数据内容用，字节 进行存储, 无法用记事本打开, 必须使用专门的软件打开.
 举例: mp3音频文件, jpg图片, doc文档等.
 with语句可以自动管理上下文资源, 不论什么原因跳出with块,都能确保文件正确的关闭, 以此来达到释放资源的目的.
+
+#### 文本文件路径
 ```python
-# 文本文件路径
 source_path = r'D:\test.txt'
 destination_path = r'D:\copy.txt'
 
@@ -1131,7 +1133,59 @@ with open(source_path, mode='rb') as reader:
 2. 不管登录是否成功, 都需要在文件中记录登录的信息
 3. 登录成功, 可以看到相应的操作菜单提示, 请实现相应的功能
 ```python
-
+import time
+# 登录日志综合案例
+FILENAME = 'log.txt' # 相对路径
+# 写入数据到日志文件中
+def record_log(user, status):
+# append 拼接模式
+    with open(FILENAME, mode='a+', encoding='utf-8') as f:
+        chinese_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+        log = f'登录用户: {user}, {status}, 登录时间: {chinese_time}'
+        f.write(log + '\n')
+def read_log():
+    with open(FILENAME, mode='rt', encoding='utf-8') as f:
+        for line in f.readlines():
+            # strip() 功能 : 去除字符串对象收尾的空格和换行
+            line = line.strip()
+            print(line)
+# 展示界面
+def show_menu():
+    menu = '''
+        **********************
+        1. 当前登录用
+        户
+        2. 查看登录日志
+        3. 退出系统
+    '''
+    print(menu)
+# 接收用户的输入
+user = input('亲, 请输入你的用户名: ')
+pwd = input('亲, 请输入您的登录密码: ')
+# 判断
+if user in ('Jack', 'Rose', 'Peter') and pwd == '888':
+# 当前用户是注册用户, 可以登录
+    record_log(user, '登录成功')
+    # 保证界面不退出
+    while True:
+        # 展示界面
+        show_menu()
+        # 提供用户输入选择
+        choice = input('亲, 请输入您的操作码: ')
+        if choice == '1':
+            print('当前用户: ', user)
+        elif choice == '2':
+            read_log()
+        elif choice == '3':
+            record_log(user,'退出系统')
+            print(f'感谢您的使用 , 期待下次再见!')
+            break
+        else:
+            print('您的输入有误, 请重新选择!!!')
+else:
+    # 登录失败
+    print('登录失败! 您的用户名或密码错误.')
+    record_log(user, '登录失败')
 ```
 ## 8. 异常处理
 有时也可以将程序错误 (error) 称作程序异常 (exception)
