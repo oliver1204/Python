@@ -1419,7 +1419,7 @@ now = datetime.datetime(2026, 10, 29, 16, 47, 1, 216054)
 
 [from 模块名] import (函数 | 类 | 变量 | *) [as 别名]
 
-1. [ ] 是可选项
+1. `[ ]`是可选项
 2. 可以根据需求, 选择合适的形式进行导入
    
 `思考 :` 为什么需要包?
@@ -1471,6 +1471,7 @@ if __name__ == '__main__':
 ```
 
 ```python
+# 三种导入方式
 # import makefood
 # from makefood import make_icecream, make_drink
 import makefood as m
@@ -1499,8 +1500,10 @@ hello world!
 ```
 
 ### 9.5 第三⽅模块
-看见更大的 Python 世界 -> https://pypi.org/
-pip有哪些命令可以使用，可以使用 pip help 命令来查看：
+看见更大的 Python 世界 -> https://pypi.org/search/
+pip有哪些命令可以使用，可以使用  pip3 --help 命令来查看：
+
+但是实际开发中pip的依赖包慧卸载不干净，有很多弊端，所以pip 方式的包管理已经被摒弃了。取而代之的是 anaconda 包管理器。
 
 ### 9.5.1 ⽹络爬⾍
 * requests-对HTTP协议进行高度封装，支持非常丰富的链接访问功能。
